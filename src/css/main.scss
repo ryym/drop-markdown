@@ -1,11 +1,18 @@
 @import url('github-markdown-css/github-markdown.css');
 
-.markdown-body {
-  box-sizing: border-box;
-  min-height: 700px;
+#container {
   min-width: 200px;
   max-width: 980px;
   margin: 0 auto;
-  padding: 45px;
+}
+
+#header {
+  margin: 10px 0;
+}
+
+.markdown-body {
+  box-sizing: border-box;
   border: 1px solid black;
+  min-height: 700px;
+  padding: 45px;
 }
