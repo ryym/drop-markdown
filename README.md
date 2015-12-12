@@ -7,5 +7,6 @@ This is just a viewer, not an editor.
 
 * Multiple file viewing
 * Styling
+* Syntax highlight of code blocks
 * Open links in a new tab
 * Dealing with local links (how?)
