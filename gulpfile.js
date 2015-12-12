@@ -1,9 +1,11 @@
-const path       = require('path');
-const gulp       = require('gulp');
-const babelify   = require('babelify');
-const browserify = require('browserify');
-const source     = require('vinyl-source-stream');
-const webserver  = require('gulp-webserver');
+const path         = require('path');
+const gulp         = require('gulp');
+const babelify     = require('babelify');
+const browserify   = require('browserify');
+const sass         = require('gulp-sass');
+const autoprefixer = require('gulp-autoprefixer');
+const source       = require('vinyl-source-stream');
+const webserver    = require('gulp-webserver');
 
 function toPath() {
   const args = Array.prototype.slice.call(arguments, 0);
@@ -13,6 +15,7 @@ function toPath() {
 const PATHS = {
   src:   toPath('src'),
   js:    toPath('src', 'js'),
+  css:   toPath('src', 'css'),
   build: toPath('build')
 };
 
@@ -28,7 +31,7 @@ gulp.task('paths', () => {
 /**
  * Transpile and bundle JavaScripts.
  */
-gulp.task('build', () => {
+gulp.task('browserify', () => {
   browserify(PATHS.js, { debug: true })
     .transform(babelify, { presets: ['es2015'] })
     .bundle()
@@ -38,11 +41,30 @@ gulp.task('build', () => {
 });
 
 /**
+ * Compile sass files.
+ */
+gulp.task('sass', () => {
+  const csses = path.join(PATHS.css, '**/*.scss');
+  gulp
+    .src(csses)
+    .pipe(sass())
+    .pipe(autoprefixer())
+    .pipe(gulp.dest(PATHS.build));
+});
+
+/**
+ * Build JavaScript and CSS.
+ */
+gulp.task('build', ['browserify', 'sass']);
+
+/**
  * Watch changes and rebuild.
  */
 gulp.task('watch', () => {
-  const srces = path.join(PATHS.src, '**/*');
-  gulp.watch(srces, ['build']);
+  const jses  = path.join(PATHS.js, '**/*.js');
+  const csses = path.join(PATHS.css, '**/*.scss');
+  gulp.watch(jses, ['browserify']);
+  gulp.watch(csses, ['sass']);
 });
 
 /**
