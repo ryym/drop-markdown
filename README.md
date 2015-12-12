@@ -2,13 +2,8 @@
 
 ## About
 
-Instant Markdown viewer on the WEB.
-This is just a viewer, not an editor.
-
-## Purpose
-
-Sometimes, there is a need for me to display Markdown files
-in the local machine without any tools or browser add-ons.
+Instant Markdown viewer on the WEB.  
+This is not an editor, just a viewer for people who want to read Markdown files without any tools or browser add-ons.
 
 ## TODO
 
