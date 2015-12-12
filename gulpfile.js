@@ -30,10 +30,20 @@ gulp.task('paths', () => {
 });
 
 /**
+ * Push to gh-pages.
+ */
+gulp.task('deploy', ['build'], () => {
+  const ghpages = require('gh-pages');
+  ghpages.publish(PATHS.build, {
+    logger: console.log.bind(console)
+  });
+});
+
+/**
  * Transpile and bundle JavaScripts.
  */
 gulp.task('browserify', () => {
-  browserify(PATHS.js, { debug: true })
+  return browserify(PATHS.js, { debug: true })
     .transform(babelify, { presets: ['es2015'] })
     .bundle()
     .on('error', err => console.error(err))
@@ -46,7 +56,7 @@ gulp.task('browserify', () => {
  */
 gulp.task('css', () => {
   const csses = path.join(PATHS.css, '**/*.scss');
-  gulp
+  return gulp
     .src(csses)
     .pipe(sass())
     .pipe(autoprefixer())
