@@ -4,6 +4,7 @@ const babelify     = require('babelify');
 const browserify   = require('browserify');
 const sass         = require('gulp-sass');
 const autoprefixer = require('gulp-autoprefixer');
+const concatCss    = require('gulp-concat-css');
 const source       = require('vinyl-source-stream');
 const webserver    = require('gulp-webserver');
 
@@ -41,21 +42,24 @@ gulp.task('browserify', () => {
 });
 
 /**
- * Compile sass files.
+ * Compile and concat css files.
  */
-gulp.task('sass', () => {
+gulp.task('css', () => {
   const csses = path.join(PATHS.css, '**/*.scss');
   gulp
     .src(csses)
     .pipe(sass())
     .pipe(autoprefixer())
+    .pipe(concatCss('main.css', {
+      includePaths: ['node_modules']
+    }))
     .pipe(gulp.dest(PATHS.build));
 });
 
 /**
  * Build JavaScript and CSS.
  */
-gulp.task('build', ['browserify', 'sass']);
+gulp.task('build', ['browserify', 'css']);
 
 /**
  * Watch changes and rebuild.
@@ -64,7 +68,7 @@ gulp.task('watch', () => {
   const jses  = path.join(PATHS.js, '**/*.js');
   const csses = path.join(PATHS.css, '**/*.scss');
   gulp.watch(jses, ['browserify']);
-  gulp.watch(csses, ['sass']);
+  gulp.watch(csses, ['css']);
 });
 
 /**
