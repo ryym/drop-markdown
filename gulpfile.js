@@ -52,7 +52,7 @@ gulp.task('browserify', () => {
 });
 
 /**
- * Compile and concat css files.
+ * Compile and concat CSS files.
  */
 gulp.task('css', () => {
   const csses = path.join(PATHS.css, '**/*.scss');
