@@ -18,5 +18,8 @@
     "gulp-sass": "^2.1.1",
     "gulp-webserver": "^0.9.1",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "dependencies": {
+    "marked": "^0.3.5"
   }
 }
